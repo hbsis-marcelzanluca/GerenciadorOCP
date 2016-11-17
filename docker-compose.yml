@@ -1,0 +1,11 @@
+version: '2'
+services:
+    gerenciador:
+        container_name: livereload
+        build:
+            context: .
+        ports:
+            - "3000:3000"
+            - "35729:35729"
+        volumes:
+            - c:/Users/marcel.zanluca/Projetos/GerenciadorOCP:/home
