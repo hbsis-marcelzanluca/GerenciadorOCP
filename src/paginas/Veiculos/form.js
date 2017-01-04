@@ -1,76 +1,21 @@
 import React, { Component } from 'react'
 import { Row, Col } from 'react-grid-system'
-import { FlatButton } from 'material-ui';
+import { FlatButton } from 'material-ui'
 import Formsy from 'formsy-react'
-import FormsyText from 'formsy-material-ui/lib/FormsyText';
-import Select from 'react-select';
-import 'react-select/dist/react-select.css';
-
-import InputPerfis from './Perfis/perfis.input'
+import FormsyText from 'formsy-material-ui/lib/FormsyText'
+import HBSelect from '../../componentes/HBSelect'
 
 const estilos = { botoesModal: { textAlign: 'right' } }
 
-const formulario = (aoSalvar, aoCancelar, dados) => (
-    <Formsy.Form onValidSubmit={ aoSalvar }>
-        <Row>
-            <Col md={ 6 }>
-                <FormsyText
-                    name="descricao"
-                    floatingLabelText="Descrição do Veículo"
-                    value={ dados.descricao }
-                    fullWidth={ true }
-                    required
-                />
-            </Col>
-            <Col md={ 6 }>
-                <FormsyText
-                    name="placa"
-                    floatingLabelText="Placa do Veículo"
-                    value={ dados.placa }
-                    fullWidth={ true }
-                    required
-                />
-            </Col>
-        </Row>
-
-        <Row>
-            <Col md={ 12 }>
-                <br/>
-                {/* <Select
-                    name="perfis"
-                    multi
-                    value={ this.state.perfisSelecionados }
-                    placeholder="Selecione os perfis para o veículo"
-                    options={ this.state.perfis }
-                    onChange={ selecionados => this.aoSelecionar(selecionados) }
-                /> */}
-            </Col>
-        </Row>
-
-        <Row style={ estilos.botoesModal }>
-            <br/>
-            <FlatButton
-                label="Cancelar"
-                type="reset"
-                primary={ false }
-                onClick={ () => aoCancelar() }
-            />
-            <FlatButton
-                label="Salvar"
-                type="submit"
-                primary={ true }
-            />
-        </Row>
-    </Formsy.Form>
-)
-
 export default class FormularioVeiculo extends Component {
 
-    state = { perfis: [ { value: 1, label: 'Teste' } ], perfisSelecionados: [] }
+    state = { perfis: [], perfisSelecionados: [] }
 
-    aoSalvar = dadosFormulario => this.props.aoSalvar(dadosFormulario)
+    aoSalvar = dadosFormulario =>
+        this.props.aoSalvar(dadosFormulario)
 
-    aoSelecionar = perfisSelecionados => this.setState({ perfisSelecionados })
+    aoSelecionarPerfis = perfisSelecionados =>
+        this.setState({ perfisSelecionados });
 
     render() {
         let { descricao, placa, perfisSelecionados } = this.props.dados;
@@ -101,8 +46,13 @@ export default class FormularioVeiculo extends Component {
         		<Row>
         			<Col md={ 12 }>
         				<br/>
-                        <InputPerfis />
-        				
+                        <HBSelect
+                            multi
+                            name="perfis"
+                            placeholder="Selecione os perfis do veiculo"
+                            registros={ [ { id: 1, descricao: "Registro 1" }, { id: 2, descricao: "Registro 2" }, { id: 3, descricao: "Registro 3" }, { id: 4, descricao: "Registro 4" } ] }
+                            aoAlterar={ this.aoSelecionarPerfis }
+                        />
         			</Col>
         		</Row>
 

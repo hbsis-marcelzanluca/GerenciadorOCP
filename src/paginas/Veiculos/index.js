@@ -4,10 +4,10 @@ import { Container } from 'react-grid-system'
 import IconeAdicionar from 'material-ui/svg-icons/content/add'
 import Tabela from '../../componentes/Tabela'
 import FormularioVeiculo from './form'
+import './estilos.css'
 
 const estilos = {
-    botaoNovoRegistro: { position: 'absolute', right: 0, bottom: 0, margin: 20 },
-    dialog: { overflowY: 'inherit' }
+    botaoNovoRegistro: { position: 'absolute', right: 0, bottom: 0, margin: 20 }
 }
 
 export default class Veiculos extends Component {
@@ -48,9 +48,18 @@ export default class Veiculos extends Component {
                             />
                         </CardText>
                     </Card>
+
+                    <ul>
+                        <li>1</li>
+                        <li>2</li>
+                        <li>3</li>
+                        <li>4</li>
+                        <li>5</li>
+                    </ul>
                 </Container>
 
                 <Dialog
+                    className="modal-veiculo"
                     modal={ false }
                     open={ this.state.modalAberta }
                     style={ estilos.dialog }

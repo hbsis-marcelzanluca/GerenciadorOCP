@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
+import { obterTipo } from './Utils'
 import Select from 'react-select'
 import 'react-select/dist/react-select.css'
 
-export default class InputPerfis extends Component {
+export default class HBSelect extends Component {
 
     static propTypes = {
         name: React.PropTypes.string.isRequired,
@@ -16,27 +17,25 @@ export default class InputPerfis extends Component {
         registros.map((registro, indice) => { return { value: registro.id, label: registro.descricao } })
 
     aoSelecionar = (registrosSelecionados) => {
-        debugger
         let { aoAlterar } = this.props
-        this.setState({ registrosSelecionados: registrosSelecionados })
-
-        if (typeof aoAlterar === 'function') {
+        if (obterTipo(aoAlterar) === 'function')
             aoAlterar(registrosSelecionados)
+
+        if (obterTipo(registrosSelecionados) === "object") {
+            this.setState({ registrosSelecionados: [registrosSelecionados] })
+        }
+        else {
+            this.setState({ registrosSelecionados })
         }
     }
 
     render() {
         let { registros = [], jaSelecionados = [] } = this.props
         let registrosTransformados = this.transformarValores(registros)
-        let valores = this.props.multi
-            ? [...jaSelecionados, ...this.state.registrosSelecionados]
-            : this.state.registrosSelecionados[0]
-
-        debugger
 
         return (
             <Select { ...this.props }
-                value={ valores }
+                value={ this.props.hasOwnProperty('multi') ? this.state.registrosSelecionados : this.state.registrosSelecionados[0] }
                 options={ registrosTransformados }
                 onChange={ selecionados => this.aoSelecionar(selecionados) }
             />
